@@ -167,7 +167,12 @@ class Nomadize(object):
         print "Setting ownership"
 
         try:
-            subprocess.check_call(['/usr/sbin/chown', '-R', "%s:NIH\Domain Users" % self.ad_user_name, self.ad_user_path])
+            group_id = subprocess.check_output(['/usr/bin/id', '-g', self.ad_user_name]).replace("\n","")
+        except subprocess.CalledProcessError, err:
+            print "%s finding Group ID for: %s" % (err, self.ad_user_name)
+
+        try:
+            subprocess.check_call(['/usr/sbin/chown', '-R', "%s:%s" % (self.ad_user_name, group_id), self.ad_user_path])
         except subprocess.CalledProcessError, err:
             print "%s setting %s" % (err, self.ad_user_name)
 
