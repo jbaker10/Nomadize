@@ -1,6 +1,6 @@
 ## Nomadize
 
-Move a local account or home folder to an NIH AD account. 
+A Python tool to help move a local account or home folder to an NIH AD account. 
 
 1) Mount the Nomadize.dmg
 
