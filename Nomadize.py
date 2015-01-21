@@ -149,7 +149,7 @@ class Nomadize(object):
         shutil.move(self.local_user_path, "%s.Nomadize" % self.local_user_path)
 
         try:
-            subprocess.check_call(['/usr/bin/dscl', '.', '-delete', self.local_user_name])
+            subprocess.check_call(['/usr/bin/dscl', '.', '-delete', '/Users/' + self.local_user_name])
         except subprocess.CalledProcessError, err:
             print "[* Error] [%s] deleting [%s]" % (err, self.local_user_name)
 
