@@ -8,7 +8,7 @@ A Python tool to help move a local account or home folder to an NIH AD account.
 
 3) From an account with Admin or Sudo rights run this command to start the wizard
 
-`sudo /Volumes/Nomadize/Nomadize.py`
+`sudo /Volumes/Nomadize/Nomadize`
 
 #### Follow the on screen instuctions:
 
