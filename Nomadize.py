@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
-import os, shutil, subprocess
+import os, shutil, subprocess, getpass
 from ctypes import *
 from ctypes.util import find_library
+from Foundation import NSUserName
 
 libDS = CDLL(find_library('DirectoryService'))
 
@@ -54,6 +55,10 @@ class tAttributeValueEntry(Structure):
     _fields_ = [
         ('fAttributeValueID', c_uint32),
         ('fAttributeValueData', tDataNode)]
+
+def isRoot():
+	if os.geteuid() != 0:
+		exit("Please run this script as root.")
 
 
 def get_DataNode_buffer(dn_obj):
@@ -203,6 +208,11 @@ class UserInput(object):
                 print "\n[+] Please choose a valid entry"
 
         local_user = ("/Users/" + users[(int(user_input) - 1)], users[(int(user_input) - 1 )])
+        
+        userRunning = os.getlogin()
+        if userRunning == local_user[1]:
+			exit("You cannot run this script from the account you are trying to migrate.")
+
         return local_user
 
     def choose_ad(self):
@@ -214,7 +224,7 @@ class UserInput(object):
         return ad_user
 
 
-
+isRoot()
 userInput = UserInput()
 nomadize = Nomadize(userInput.choose_local(), userInput.choose_ad())
 nomadize.create_mobile()
